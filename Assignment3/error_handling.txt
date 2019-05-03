@@ -1,0 +1,7 @@
+One of the possible errors that could occur in this program would be the month abbreviation command not being able to handle dates in the format of year/month/day ordering (ie. 2018/02/02 or 2018.02.02). This can be handled by throwing an exception if the first set of digits contain 4 digits.
+
+If the format on the date is correct but the day or month are out of their respective range then a value error would be used to handle any out of range numbers in month or day.
+
+Another possible error would be if a filename is written to the command line and is not found within the same directory as the sengfmt2.py program. In this instance a IOError exception handler would handle this situation.
+
+In the case of the program being case sensitive to some format detections (ie. "fmt ON"), this can easily be handled by using the .lower() method for strings to avoid case sensitive situations.
