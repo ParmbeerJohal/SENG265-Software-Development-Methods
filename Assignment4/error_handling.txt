@@ -1,0 +1,8 @@
+Parm Johal
+Student #V00787710
+
+one possible error that would occur in this program would be if not enough memory was allocated for the mtf or rle arrays. The way to fix this would be to check the size of the allocated memory by using a print statement. You could also use an if statement to check whether or not the memory allocation returned a null value.
+
+Another possible error that can arise in this program would be if there is no input into the program. One way to handle this would be if you put an if statement handling the case of no input into the functions. If there is no input, then exit out of the program.
+
+A third possible error would be for any invalid characters that are not apart of the program's encoding table. The way to handle this would be to check the table for the character being proccessed and determine whether or not to continue with the program. If the character is not found within the table, then state the invalid error and re-enter the input, or exit out of the program and indicate that the error occured due to a 'character mismatch' or a 'character not found' error.
