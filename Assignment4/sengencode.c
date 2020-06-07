@@ -1,14 +1,14 @@
 /* Student Name: Parm Johal
  * Student Number: V00787710
  *  * Note: The implementation of MTF encode has been given
- *   * to you and your task is to implement the Run-Length 
- *    * encoding and decoding algorithms. 
+ *   * to you and your task is to implement the Run-Length
+ *    * encoding and decoding algorithms.
  *     */
 
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
- 
+
 #define MAX_MSG_SIZE 200
 #define MAX_TABLE_SIZE 256
 
@@ -17,12 +17,12 @@ char *table = NULL;
 void init_mtf_table(int size)
 {
 	int i;
-	
+
 	/* initialize the table */
-	for ( i = 0; i < size; i++) 
+	for ( i = 0; i < size; i++)
     {
-        /* Can you figure out why assigning the 
- *          * values from the back of array? 
+        /* Can you figure out why assigning the
+ *          * values from the back of array?
  *                   */
 		table[size-i-1] = (char) i;
 	}
@@ -31,9 +31,9 @@ void init_mtf_table(int size)
 int alloc_mtf_table(int size)
 {
 	if (size <= 0) size = MAX_TABLE_SIZE;
-	
+
 	table = (char *) malloc(sizeof(char) * size);
-	if (!table) 
+	if (!table)
     {
 		fprintf(stderr, "error alloc!");
 		return 0;
@@ -44,7 +44,7 @@ int alloc_mtf_table(int size)
 
 void free_mtf_table(void)
 {
-	if (table) 
+	if (table)
         free(table);
 }
 
@@ -52,12 +52,12 @@ int move_to_front(char *str, char c)
 {
     char *p, *q;
     int shift = 0;
-    
+
     /* create a copy of str */
     p = (char *)malloc(strlen(str)+1);
     strncpy(p, str, strlen(str)+1);
     /* returns pointer to location of char c in string str */
-    q = strchr(p,c);  shift = q-p;      
+    q = strchr(p,c);  shift = q-p;
     /* number of characters from 0 to the position of c in str */
     shift = q-p;
     /* shift the characters from the second position in str */
@@ -70,7 +70,7 @@ int move_to_front(char *str, char c)
     /* return the code number */
     return shift+1;
 }
- 
+
 void mtf_decode(int *code, int size, char *msg)
 {
     int i,index;
@@ -81,7 +81,7 @@ void mtf_decode(int *code, int size, char *msg)
     {
         c = table[code[i]-1];
         index = move_to_front(table,c);
-        if(code[i] != index) 
+        if(code[i] != index)
         {
             printf("there is an error in the decode process");
         }
@@ -90,8 +90,8 @@ void mtf_decode(int *code, int size, char *msg)
     msg[size]='\0';
     free_mtf_table();
 }
- 
-void mtf_encode(char *msg, int size, int *code) 
+
+void mtf_encode(char *msg, int size, int *code)
 {
     int i=0;
     char c;
@@ -99,7 +99,7 @@ void mtf_encode(char *msg, int size, int *code)
 
     alloc_mtf_table(MAX_TABLE_SIZE);
 
-    for(i=0; i<size; i++) 
+    for(i=0; i<size; i++)
     {
         c = msg[i];
         code[i] = move_to_front(table, c);
@@ -110,13 +110,13 @@ void mtf_encode(char *msg, int size, int *code)
 
 
 
-/* This function is implemented to apply run-length decoding. 
+/* This function is implemented to apply run-length decoding.
  *  * @param code: the run-length-encoded message.
  *   * @param size: the size of the protential 'shorter' run-length code.
  *    * @param msg: the recovered mtf-encoded message.
  *     * @return: the recovered length of the mtf-encoded message.
  *      */
-int run_length_decode(int *code, int size, int *msg) 
+int run_length_decode(int *code, int size, int *msg)
 {
     /****** To be completed ******/
 	int count = 0; // Count the number of occurences of 1's.
@@ -138,20 +138,20 @@ int run_length_decode(int *code, int size, int *msg)
 		}
 		count = 0;
 	}
-    
+
     /* the new length of the array must be returned */
     return msg_index;
 }
 
 
 
-/* This function is implemented to apply run-length encoding. 
+/* This function is implemented to apply run-length encoding.
  *  * @param msg: the original mtf-encoded message.
  *   * @param size: the size of the mtf-encoded message.
  *    * @param code: the run_length encoded message.
  *     * @return: the new length of the run-length-encoded message.
  *      */
-int run_length_encode(int *msg, int size, int *code) 
+int run_length_encode(int *msg, int size, int *code)
 {
     /****** To be completed ******/
 	int count;
@@ -177,15 +177,15 @@ int run_length_encode(int *msg, int size, int *code)
 			code[code_index] = msg[index];
 			code_index++;
 		}
-		
+
 
 
 
 		index++;
 	}
-		
-	
-	
+
+
+
     /* the new length of the array must be returned */
     return code_index;
 }
@@ -193,7 +193,7 @@ int run_length_encode(int *msg, int size, int *code)
 
 
 
-/* This function is implemented to check if the run_length 
+/* This function is implemented to check if the run_length
  *  * encoded message can be recovered correctly.
  *   * @param msg: the original mtf encoded message
  *    * @param size: the size of the protential 'shorter' run_length code
@@ -225,13 +225,13 @@ int check_mtf(char *msg, int size, int *code)
     /* check decode of mtf */
     mtf_decode(code, size, msg2);
     if(strcmp(msg,msg2)!=0) val=0;
- 
+
     free(msg2);
- 
+
     return val;
 }
 
-void simple_test(void) 
+void simple_test(void)
 {
     char msg_array[3][MAX_MSG_SIZE] = {"abcabaaaabc","sengfmtyoushallpass","abbbbbcccccdecccceee"};
     int code[MAX_MSG_SIZE] = {0};
@@ -256,7 +256,7 @@ void simple_test(void)
     }
 }
 
-void run_length_test(void) 
+void run_length_test(void)
 {
     char test_msg_array[5][MAX_MSG_SIZE] = {
         "abcabcaaaaaab",
@@ -292,8 +292,8 @@ void run_length_test(void)
         printf("]\n");
         /* print mtf-encoded message */
         int new_len = run_length_encode(mtf_code, len, rl_code);
-        if (new_len == test_rl_size[i]) 
-        {   
+        if (new_len == test_rl_size[i])
+        {
             int pass_encode = 1;
             for (j=0; j<new_len; j++)
                 if (rl_code[j] != test_rl_code_array[i][j])
@@ -310,7 +310,7 @@ void run_length_test(void)
             if (pass_encode)
                 printf("Test %d Succeed in run_length_encode.\n", i+1);
         }
-        else 
+        else
         {
             printf("Test %d FAILED in run_length_encode.\n", i+1);
             printf("Expected new length: %d.\n", test_rl_size[i]);
@@ -323,11 +323,11 @@ void run_length_test(void)
         /* check if the run_length encoded message can be decoded correctly */
         if (check_run_length(mtf_code, new_len, rl_code))
             printf("Test %d Succeed in run_length_decode.\n",i+1);
-        else   
+        else
             printf("Test %d FAILED in run_length_decode.\n", i+1);
-        
+
         /* Now it's time to recover the original message */
-        run_length_decode(rl_code, new_len, mtf_code); 
+        run_length_decode(rl_code, new_len, mtf_code);
 
         if(check_mtf(test_msg_array[i], len, mtf_code))
             printf("Test %d Succeed in recovering the original message.\n", i+1);
